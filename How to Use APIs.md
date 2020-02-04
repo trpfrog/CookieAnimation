@@ -37,9 +37,7 @@ APIの使い方はここを見てください。
 
 返される色のベクトル v は次の式で与えられます。
 
-<img src="https://latex.codecogs.com/gif.latex?\vec v = \mathrm{(opacity)}\times\mathrm{(c)}+
-\{1-\mathrm{(opacity)}\}\times\mathrm{(base)}" />
-
+v = opacity * c + (1-opacity) * base
 
 
 ### struct color get_pixel
