@@ -22,7 +22,7 @@ APIの使い方はここを見てください。
 
 
 
-###struct color mix_color
+### struct color mix_color
 
 作成者：つまみ
 
@@ -85,7 +85,7 @@ v = opacity * c + (1-opacity) * base
 
 
 
-###void draw_background (未完成)
+### void draw_background (未完成)
 
 背景をバッファに上書きします。
 
@@ -103,7 +103,7 @@ v = opacity * c + (1-opacity) * base
 
 
 
-###void img_fillcircle
+### void img_fillcircle
 
 - struct color c
   - 塗りつぶす色
