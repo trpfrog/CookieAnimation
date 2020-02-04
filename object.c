@@ -4,11 +4,11 @@
 #include "img.h"
 #include "object.h"
 
-void draw_background(void){
+void draw_background(int *layer){
     //頼んだ つまみより
 }
 
-void bake_cookie(void){
+void bake_cookie(int *layer){
 
 }
 
