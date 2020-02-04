@@ -87,13 +87,19 @@ v = opacity * c + (1-opacity) * base
 
 ### void draw_background (未完成)
 
-背景をバッファに上書きします。
+- **int** *layer
+  - レイヤのポインタ
+
+背景を渡されたレイヤに保存します。
 
 
 
 ### void bake_cookie (未完成)
 
-中央のクッキーをバッファに上書きします。
+- **int** *layer
+  - レイヤのポインタ
+
+中央のクッキーを渡されたレイヤに上書きします。
 
 
 
@@ -105,11 +111,11 @@ v = opacity * c + (1-opacity) * base
 
 ### void img_fillcircle
 
-- struct color c
+- **struct color** c
   - 塗りつぶす色
-- int x,y
+- **int** x,y
   - 中央の座標
-- int r
+- **int** r
   - 円の半径
 
 円を描画しバッファに上書きします。
