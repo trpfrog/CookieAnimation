@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "img.h"
 #include "object.h"
+#include "layer.h"
 
 int main(void){
     int background[HEIGHT][WIDTH][3];

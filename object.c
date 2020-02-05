@@ -3,6 +3,7 @@
 #include <math.h>
 #include "img.h"
 #include "object.h"
+#include "layer.h"
 
 void draw_background(int *layer){
     //頼んだ つまみより
