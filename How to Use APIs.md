@@ -79,6 +79,134 @@ v = opacity * c + (1-opacity) * base
 
 
 
+## layer.h
+
+レイヤ関連の処理を行うAPI
+
+
+
+### レイヤの定義
+
+レイヤは次のように定義してください。また、使用前は必ず初期化を行ってください。
+
+```c
+int layer[HEIGHT][WIDTH][3];
+clear_layer(layer);
+```
+
+また、3次元目にはr,g,bの値が入ります。struct colorとは違い、0〜255の範囲外の色も入ることに注意してください。範囲外の色は透明色として扱われます。
+
+
+
+### bool is_within_colorrange
+
+作成者：つまみ
+
+- **int** color[3]
+  - 調べたい色のrgb 3要素の配列
+
+int配列で表された色が、0〜255の範囲に入っているかを調べます。r,g,bともに0〜255であればtrueを返し、そうでなければfalseを返します。
+
+
+
+### void copy_layer
+
+作成者：つまみ
+
+- **int** new_layer [HEIGHT] [WIDTH] [3]
+  - コピー先のレイヤ
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - コピー元のレイヤ
+
+レイヤをそのままコピーします。
+
+
+
+### void paint_layerpixel
+
+作成者：つまみ
+
+- **int** pixel [3]
+  - 色を塗るピクセル
+- **int** color [3]
+  - 塗る色
+
+指定したピクセルに指定した3要素配列の色を代入します。ピクセルからピクセルへの色のコピーとして使うことができます。
+
+
+
+### void clear_layer
+
+作成者：つまみ
+
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 描画する対象のレイヤ
+
+レイヤの全ピクセルを {-1,-1,-1} (透明色)で初期化します。
+
+
+
+### void unite_layer
+
+作成者：つまみ
+
+- **int** lower_layer [HEIGHT] [WIDTH] [3]
+  - 下敷きになるレイヤ
+- **int** upper_layer [HEIGHT] [WIDTH] [3]
+  - 上にのせるレイヤ
+- **int** new_layer [HEIGHT] [WIDTH] [3]
+  - 被せた結果を出力するレイヤ
+
+2つのレイヤを1つにします。lower_layerの上にupper_layerを被せた結果をnew_layerに代入します。
+
+
+
+### void subtract_layer
+
+作成者：つまみ
+
+- **int** lower_layer [HEIGHT] [WIDTH] [3]
+  - 減算されるレイヤ
+- **int** upper_layer [HEIGHT] [WIDTH] [3]
+  - 減算するレイヤ
+- **int** new_layer [HEIGHT] [WIDTH] [3]
+  - 減算されたレイヤの出力先レイヤ
+
+lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_layerに出力します。
+
+
+
+### void linear_transform
+
+作成者：つまみ
+
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 変換されるレイヤ
+- **double** matrix [2] [2]
+  - 変換に使う2*2行列
+- **int** origin_x, origin_y
+  - 変換するにあたって原点として扱う点の座標
+- **int** new_layer [HEIGHT] [WIDTH] [3]
+  - 変換先レイヤ
+
+レイヤを指定された行列で変換します。
+
+
+
+### void fill_painted_pixel
+
+作成者：つまみ
+
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 塗りつぶすレイヤ
+- **struct color** c
+  - 塗りつぶす色
+
+指定したレイヤの色が塗られている部分全てを指定した色で塗り潰します。
+
+
+
+
 ## object.h
 
 アニメーションのパーツをバッファに描画するAPI。
@@ -87,17 +215,28 @@ v = opacity * c + (1-opacity) * base
 
 ### void draw_background (未完成)
 
-- **int** *layer
-  - レイヤのポインタ
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 描画する対象のレイヤ
 
 背景を渡されたレイヤに保存します。
 
 
 
+### void draw_cookieband
+
+作成者：つまみ
+
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 描画する対象のレイヤ
+
+クッキーのカウンタを表示するための帯をレイヤに出力します。
+
+
+
 ### void bake_cookie (未完成)
 
-- **int** *layer
-  - レイヤのポインタ
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 描画する対象のレイヤ
 
 中央のクッキーを渡されたレイヤに上書きします。
 
@@ -117,8 +256,10 @@ v = opacity * c + (1-opacity) * base
   - 中央の座標
 - **int** r
   - 円の半径
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 描画する対象のレイヤ
 
-円を描画しバッファに上書きします。
+円を描画し指定されたレイヤに上書きします。
 
 
 
@@ -132,7 +273,12 @@ v = opacity * c + (1-opacity) * base
   - 頂点数
 - **struct color** c
   - 塗りつぶす色
-- **double** opacity
-  - 不透明度
+- **int** layer [HEIGHT] [WIDTH] [3]
+  - 描画する対象のレイヤ
 
-指定した頂点集合を結んだ多角形を塗り潰します。垂直な線を引くと塗り潰しがバグるので、垂直に線を引きたいときは1px横にずらすなどして下さい。
+指定した頂点集合を結んだ多角形を塗り潰し、指定されたレイヤに描画します。垂直な線を引くと塗り潰しがバグるので、垂直に線を引きたいときは1px横にずらすなどして下さい。
+
+また塗り潰しアルゴリズムの特性上、これを通したレイヤはもともと描画されていたものが全て消えてしまうため、新しく作成したレイヤに実行するようにしてください。
+
+
+
