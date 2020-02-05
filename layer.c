@@ -65,3 +65,19 @@ void subtract_layer(int lower_layer[HEIGHT][WIDTH][3],
         }
     }
 }
+
+void linear_transform(int layer[HEIGHT][WIDTH][3],
+        double matrix[2][2],int origin_x, int origin_y, int new_layer[HEIGHT][WIDTH][3]){
+    double a,b,c,d;
+    a = matrix[0][0]; b = matrix[0][1]; c = matrix[1][0]; d = matrix[1][1];
+    int x1,y1;
+    for(int y=0; y<HEIGHT; y++){
+        for(int x=0; x<WIDTH; x++){
+            x1 = (int)(a*(x-origin_x) + b*(y-origin_y) + origin_x);
+            y1 = (int)(c*(x-origin_x) + d*(y-origin_y) + origin_y);
+            if(0 <= x1 && x1 < WIDTH && 0 <= y1 && y1 < HEIGHT){
+                paint_layerpixel(new_layer[y1][x1],layer[y][x]);
+            }
+        }
+    }
+}
