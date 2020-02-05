@@ -8,7 +8,7 @@
 void draw_background(int layer[HEIGHT][WIDTH][3]){
     //仮
     int base_color[3] = {15,100,160};
-    for(int i=0; i<HEIGHT; i++){
+    for (int i = 0; i < HEIGHT; i++){
         for(int j=0; j<WIDTH; j++){
             for(int k=0; k<3; k++){
                 layer[i][j][k] = base_color[k];
@@ -49,6 +49,19 @@ void img_fillcircle(struct color c, int x, int y, double r, int layer[HEIGHT][WI
             if((x-i)*(x-i) + (y-j)*(y-j) <= r*r){
                 paint_layerpixel(layer[j][i],color);
             }
+        }
+    }
+}
+
+//template_function
+void img_fillrect(struct color c, double x, double y, double w, double h, int layer[HEIGHT][WIDTH][3]){
+    int imin = (int)(x - w / 2), imax = (int)(x + w / 2);
+    int jmin = (int)(y - h / 2), jmax = (int)(y + h / 2);
+    int i, j;
+    int color[3] = {c.r, c.g, c.b};
+    for (j = jmin; j <= jmax; ++j){
+        for (i = imin; i <= imax; ++i){
+            paint_layerpixel(layer[j][i],color);
         }
     }
 }
