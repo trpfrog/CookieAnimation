@@ -81,3 +81,17 @@ void linear_transform(int layer[HEIGHT][WIDTH][3],
         }
     }
 }
+
+void fill_painted_pixel(int layer[HEIGHT][WIDTH][3], struct color c){
+    int color[3] = {c.r,c.g,c.b};
+    for(int i=0; i<HEIGHT; i++){
+        for(int j=0; j<WIDTH; j++){
+            if(!is_within_colorrange(layer[i][j])) continue;
+            for(int k=0; k<3; k++){
+                paint_layerpixel(layer[i][j],color);
+            }
+        }
+    }
+}
+
+void gradate_painted_pixel(int layer[HEIGHT][WIDTH][3]);
