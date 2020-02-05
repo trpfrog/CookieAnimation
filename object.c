@@ -5,17 +5,38 @@
 #include "object.h"
 #include "layer.h"
 
-void draw_background(int *layer){
-    //頼んだ つまみより
+void draw_background(int layer[HEIGHT][WIDTH][3]){
+    //仮
+    int base_color[3] = {15,100,160};
+    for(int i=0; i<HEIGHT; i++){
+        for(int j=0; j<WIDTH; j++){
+            for(int k=0; k<3; k++){
+                layer[i][j][k] = base_color[k];
+            }
+        }
+    }
 }
 
-void bake_cookie(int *layer){
-
+void draw_cookieband(int layer[HEIGHT][WIDTH][3]){
+    clear_layer(layer);
+    int color[3] = {0,0,0};
+    for(int i=230; i<=270; i++){
+        for(int j=0; j<WIDTH; j++){
+            for(int k=0; k<3; k++){
+                layer[i][j][k] = color[k];
+            }
+        }
+    }
 }
 
-void bake_background_cookie(void){
-
+void bake_cookie(int layer[HEIGHT][WIDTH][3]){
+    //仮
+    clear_layer(layer);
+    struct color cookie = {231,180,0};
+    img_fillcircle(cookie,100,140,60,layer);
 }
+
+void bake_background_cookie(void);
 
 //template_function
 void img_fillcircle(struct color c, int x, int y, double r, int layer[HEIGHT][WIDTH][3]) {
@@ -42,7 +63,6 @@ void fill_polygon(int x[], int y[], int dots, struct color c, int layer[HEIGHT][
         if (y_min > y[i]) y_min = y[i];
     }
 
-    int layer[HEIGHT][WIDTH][3];
     int invisible[3] = {-1,-1,-1};
     int marker[3]    = {-2,-2,-2};
     int ignore[3]    = {-3,-3,-3};
@@ -137,5 +157,4 @@ void fill_polygon(int x[], int y[], int dots, struct color c, int layer[HEIGHT][
             }
         }
     }
-    merge_layer(layer,opacity);
 }
