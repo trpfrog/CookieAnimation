@@ -18,18 +18,21 @@ void bake_background_cookie(void){
 }
 
 //template_function
-void img_fillcircle(struct color c, int x, int y, double r) {
+void img_fillcircle(struct color c, int x, int y, double r, int layer[HEIGHT][WIDTH][3]) {
     int imin = x - r - 1, imax = x + r + 1;
     int jmin = y - r - 1, jmax = y + r + 1;
     int i, j;
+    int color[3] = {c.r,c.g,c.b};
     for(j = jmin; j <= jmax; ++j) {
         for(i = imin; i <= imax; ++i) {
-            if((x-i)*(x-i) + (y-j)*(y-j) <= r*r) put_pixel(c, i, j, 1.0);
+            if((x-i)*(x-i) + (y-j)*(y-j) <= r*r){
+                paint_layerpixel(layer[j][i],color);
+            }
         }
     }
 }
 
-void fill_polygon(int x[], int y[], int dots, struct color c, double opacity){
+void fill_polygon(int x[], int y[], int dots, struct color c, int layer[HEIGHT][WIDTH][3]){
     int x_max = 0; int x_min = WIDTH-1;
     int y_max = 0; int y_min = HEIGHT-1;
     for(int i=0; i<dots; i++){
