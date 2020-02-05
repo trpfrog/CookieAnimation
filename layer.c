@@ -38,3 +38,30 @@ void clear_layer(int layer[HEIGHT][WIDTH][3]){
         }
     }
 }
+
+void unite_layer(int lower_layer[HEIGHT][WIDTH][3],
+        int upper_layer[HEIGHT][WIDTH][3], int new_layer[HEIGHT][WIDTH][3]){
+    copy_layer(new_layer,lower_layer);
+    for(int i=0; i<HEIGHT; i++){
+        for(int j=0; j<WIDTH; j++){
+            if(!is_within_colorrange(upper_layer[i][j])) continue;
+            for(int k=0; k<3; k++){
+                paint_layerpixel(new_layer[i][j],upper_layer[i][j]);
+            }
+        }
+    }
+}
+
+void subtract_layer(int lower_layer[HEIGHT][WIDTH][3],
+        int upper_layer[HEIGHT][WIDTH][3],int new_layer[HEIGHT][WIDTH][3]){
+    copy_layer(new_layer,lower_layer);
+    int invisible[3] = {-1,-1,-1};
+    for(int i=0; i<HEIGHT; i++){
+        for(int j=0; j<WIDTH; j++){
+            if(!is_within_colorrange(upper_layer[i][j])) continue;
+            for(int k=0; k<3; k++){
+                paint_layerpixel(new_layer[i][j],invisible);
+            }
+        }
+    }
+}
