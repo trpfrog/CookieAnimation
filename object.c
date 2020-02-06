@@ -18,9 +18,9 @@ void draw_background(int layer[HEIGHT][WIDTH][3]){
     /*
     struct color base_color = {15,100,160};
     struct color base_color2 = {30,144,255};
-    for (double i = 0; i < 4; i++){
-        if((int)i%2 == 0){img_fillrect(base_color,25+(double)i*50, 150, 50, 300,layer);}
-        else if((int)i%2 == 1){img_fillrect(base_color2, 25 + (double)i * 50, 150, 50, 300, layer);}
+    for (double i = 0; i < 20; i++){
+        if((int)i%2 == 0){img_fillrect(base_color2,(double)i*10, 150, 10, 300,layer);}
+        else if((int)i%2 == 1){img_fillrect(base_color,(double)i*10, 150, 10, 300,layer);}
     }
     */
 }
@@ -40,7 +40,7 @@ void draw_cookieband(int layer[HEIGHT][WIDTH][3]){
 void bake_cookie(int layer[HEIGHT][WIDTH][3]){
     //仮
     clear_layer(layer);
-    struct color cookie = {231,180,0};
+    struct color cookie = {164, 101, 39};
     img_fillcircle(cookie,100,140,60,layer);
 }
 
