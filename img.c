@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "img.h"
 #include "object.h"
 
@@ -17,6 +18,15 @@ void img_clear(void) {
     }
 }
 
+struct color set_valid_alpha(struct color c){
+    if(c.a > 1){
+        c.a = 1.0;
+    }else if(c.a < 0){
+        c.a = 0.0;
+    }
+    return c;
+}
+
 //template_function
 void img_write(void) {
     sprintf(fname, "img%04d.ppm", ++filecnt);
@@ -27,35 +37,43 @@ void img_write(void) {
     fclose(f);
 }
 
-struct color mix_color(struct color c, struct color base, double opacity){
-    c.r = base.r*(1-opacity)+c.r*opacity;
-    c.g = base.g*(1-opacity)+c.g*opacity;
-    c.b = base.b*(1-opacity)+c.b*opacity;
-    return c;
+struct color mix_color(struct color c, struct color base){
+    c = set_valid_alpha(c);
+    base = set_valid_alpha(base);
+    double alpha = c.a + (1-c.a)*base.a;
+    unsigned char r = base.r*(1-c.a)+c.r*c.a;
+    unsigned char g = base.g*(1-c.a)+c.g*c.a;
+    unsigned char b = base.b*(1-c.a)+c.b*c.a;
+    struct color new_color =  {r,g,b,alpha};
+    return new_color;
 }
 
 struct color get_pixel(int x, int y){
     struct color temp = {buf[HEIGHT-y-1][x][0],
                          buf[HEIGHT-y-1][x][1],
-                         buf[HEIGHT-y-1][x][2]};
+                         buf[HEIGHT-y-1][x][2],
+                         1.0};
     return temp;
 }
 
-void put_pixel(struct color c, int x, int y, double opacity) {
+void put_pixel(struct color c, int x, int y) {
     if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) return;
-    if(opacity != 1.0) c = mix_color(c,get_pixel(x,y),opacity);
+    c = set_valid_alpha(c);
+    if(c.a != 1.0) c = mix_color(c,get_pixel(x,y));
     buf[HEIGHT-y-1][x][0] = c.r;
     buf[HEIGHT-y-1][x][1] = c.g;
     buf[HEIGHT-y-1][x][2] = c.b;
 }
 
-void merge_layer(int layer[HEIGHT][WIDTH][3], double opacity){
-    struct color c;
+void merge_layer(struct color layer[HEIGHT][WIDTH]){
     for(int x=0; x<WIDTH; x++){
         for(int y=0; y<HEIGHT; y++){
-            if(layer[y][x][0]<0 || layer[y][x][1]<0 || layer[y][x][2]<0) continue;
-            c.r = layer[y][x][0]; c.g = layer[y][x][1]; c.b = layer[y][x][2];
-            put_pixel(c,x,y,opacity);
+            if(layer[y][x].a<=0) continue;
+            put_pixel(layer[y][x],x,y);
         }
     }
+}
+
+bool color_equal(struct color c1, struct color c2){
+    return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a;
 }

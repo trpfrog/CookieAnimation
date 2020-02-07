@@ -1,9 +1,9 @@
 #include <stdbool.h>
-bool is_within_colorrange(int color[3]);
-void copy_layer(int new_layer[HEIGHT][WIDTH][3], int layer[HEIGHT][WIDTH][3]);
-void paint_layerpixel(int pixel[3], int color[3]);
-void clear_layer(int layer[HEIGHT][WIDTH][3]);
-void unite_layer(int lower_layer[HEIGHT][WIDTH][3], int upper_layer[HEIGHT][WIDTH][3], int new_layer[HEIGHT][WIDTH][3]);
-void subtract_layer(int lower_layer[HEIGHT][WIDTH][3], int upper_layer[HEIGHT][WIDTH][3], int new_layer[HEIGHT][WIDTH][3]);
-void linear_transform(int layer[HEIGHT][WIDTH][3], double matrix[2][2],int origin_x, int origin_y, int new_layer[HEIGHT][WIDTH][3]);
-void fill_painted_pixel(int layer[HEIGHT][WIDTH][3], struct color c);
+bool is_valid_alpha(struct color c);
+void copy_layer(struct color new_layer[HEIGHT][WIDTH], struct color layer[HEIGHT][WIDTH]);
+void clear_layer(struct color layer[HEIGHT][WIDTH]);
+void unite_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_layer[HEIGHT][WIDTH], struct color new_layer[HEIGHT][WIDTH]);
+void subtract_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_layer[HEIGHT][WIDTH], struct color new_layer[HEIGHT][WIDTH]);
+void linear_transform(struct color layer[HEIGHT][WIDTH],
+                      double matrix[2][2],int origin_x, int origin_y, struct color new_layer[HEIGHT][WIDTH]);
+void fill_painted_pixel(struct color layer[HEIGHT][WIDTH], struct color c);
