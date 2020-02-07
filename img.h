@@ -9,3 +9,4 @@ struct color get_pixel(int x, int y);
 void put_pixel(struct color c, int x, int y);
 void merge_layer(struct color layer[HEIGHT][WIDTH]);
 bool color_equal(struct color c, struct color d);
+void print_color(struct color c);

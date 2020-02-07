@@ -77,3 +77,7 @@ void merge_layer(struct color layer[HEIGHT][WIDTH]){
 bool color_equal(struct color c1, struct color c2){
     return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a;
 }
+
+void print_color(struct color c){
+    printf("r=%d, g=%d, b=%d, a=%f\n",c.r,c.g,c.b,c.a);
+}
