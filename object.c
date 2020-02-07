@@ -53,7 +53,7 @@ void img_fillcircle(struct color c, int x, int y, double r, struct color layer[H
     for(j = jmin; j <= jmax; ++j) {
         for(i = imin; i <= imax; ++i) {
             if((x-i)*(x-i) + (y-j)*(y-j) <= r*r){
-                layer[j][i] = mix_color(layer[j][i],c);
+                layer[j][i] = mix_color(c,layer[j][i]);
             }
         }
     }
@@ -66,7 +66,7 @@ void img_fillrect(struct color c, double x, double y, double w, double h, struct
     int i, j;
     for (j = jmin; j <= jmax; ++j){
         for (i = imin; i <= imax; ++i){
-            layer[j][i] = mix_color(layer[j][i],c);
+            layer[j][i] = mix_color(c,layer[j][i]);
         }
     }
 }
