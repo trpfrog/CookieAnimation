@@ -30,7 +30,7 @@ void unite_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_lay
     copy_layer(new_layer,lower_layer);
     for(int i=0; i<HEIGHT; i++){
         for(int j=0; j<WIDTH; j++){
-            new_layer[i][j] = upper_layer[i][j];
+            new_layer[i][j] = mix_color(upper_layer[i][j],new_layer[i][j]);
         }
     }
 }
