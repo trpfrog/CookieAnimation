@@ -8,6 +8,16 @@ APIの使い方はここを見てください。
 
 画像の出力とバッファの管理を行うAPI。
 
+### struct color
+
+構造体struct colorはRGBAの値を保存します。定義は次のとおりです。
+
+```c
+struct color { unsigned char r, g, b; double a; };
+```
+
+double aは不透明度(alpha)を表し、その値は0〜1で決定されます。
+
 
 
 ### void img_clear
@@ -30,14 +40,10 @@ APIの使い方はここを見てください。
   - 混ぜる色のcolorオブジェクト。
 - **struct color** base
   - 混ぜられる色のcolorオブジェクト。
-- **double** opacity
-  - cの不透明度。0〜1の範囲で指定します。
 
-ベースとなる色baseに色cを不透明度opacityで乗せたときの色を返します。
+ベースとなる色baseに色cを重ねたときの色を返します。
 
-返される色のベクトル v は次の式で与えられます。
 
-v = opacity * c + (1-opacity) * base
 
 
 ### struct color get_pixel
@@ -59,8 +65,6 @@ v = opacity * c + (1-opacity) * base
   - 塗りつぶす色
 - **int** x, y
   - 塗りつぶす座標
-- **double** opacity
-  - cの不透明度。0〜1の範囲で指定します。
 
 指定した座標を指定した色で塗り潰します。
 
@@ -70,12 +74,21 @@ v = opacity * c + (1-opacity) * base
 
 作成者：つまみ
 
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - バッファと同じ形式で色が保存された配列
-- **double** opacity
-  - マージするときのlayerの不透明度
 
-バッファにlayerをマージします。このとき不透明度を指定してマージすることができます。
+バッファにlayerをマージします。
+
+
+
+### bool color_equal
+
+作成者：つまみ
+
+- **struct color** c1, c2
+  - 比較したい色
+
+指定した色のRGBAが全て一致しているかどうかを確認します。
 
 
 
@@ -90,22 +103,20 @@ v = opacity * c + (1-opacity) * base
 レイヤは次のように定義してください。また、使用前は必ず初期化を行ってください。
 
 ```c
-int layer[HEIGHT][WIDTH][3];
+struct color layer[HEIGHT][WIDTH];
 clear_layer(layer);
 ```
 
-また、3次元目にはr,g,bの値が入ります。struct colorとは違い、0〜255の範囲外の色も入ることに注意してください。範囲外の色は透明色として扱われます。
 
 
-
-### bool is_within_colorrange
+### bool is_valid_alpha
 
 作成者：つまみ
 
-- **int** color[3]
-  - 調べたい色のrgb 3要素の配列
+- **struct color** c
+  - 調べたい色
 
-int配列で表された色が、0〜255の範囲に入っているかを調べます。r,g,bともに0〜255であればtrueを返し、そうでなければfalseを返します。
+色cのアルファ値c.aが0から1の範囲に入っているかどうか調べ、入っていればtrue、そうでなければfalseを返します。
 
 
 
@@ -115,14 +126,14 @@ int配列で表された色が、0〜255の範囲に入っているかを調べ�
 
 - **int** new_layer [HEIGHT] [WIDTH] [3]
   - コピー先のレイヤ
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - コピー元のレイヤ
 
 レイヤをそのままコピーします。
 
 
 
-### void paint_layerpixel
+### void paint_layerpixel (削除済み)
 
 作成者：つまみ
 
@@ -139,7 +150,7 @@ int配列で表された色が、0〜255の範囲に入っているかを調べ�
 
 作成者：つまみ
 
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 描画する対象のレイヤ
 
 レイヤの全ピクセルを {-1,-1,-1} (透明色)で初期化します。
@@ -150,11 +161,11 @@ int配列で表された色が、0〜255の範囲に入っているかを調べ�
 
 作成者：つまみ
 
-- **int** lower_layer [HEIGHT] [WIDTH] [3]
+- **struct color** lower_layer [HEIGHT] [WIDTH]
   - 下敷きになるレイヤ
-- **int** upper_layer [HEIGHT] [WIDTH] [3]
+- **struct color** upper_layer [HEIGHT] [WIDTH]
   - 上にのせるレイヤ
-- **int** new_layer [HEIGHT] [WIDTH] [3]
+- **struct color** new_layer [HEIGHT] [WIDTH]
   - 被せた結果を出力するレイヤ
 
 2つのレイヤを1つにします。lower_layerの上にupper_layerを被せた結果をnew_layerに代入します。
@@ -165,11 +176,11 @@ int配列で表された色が、0〜255の範囲に入っているかを調べ�
 
 作成者：つまみ
 
-- **int** lower_layer [HEIGHT] [WIDTH] [3]
+- **struct color** lower_layer [HEIGHT] [WIDTH]
   - 減算されるレイヤ
-- **int** upper_layer [HEIGHT] [WIDTH] [3]
+- **struct color** upper_layer [HEIGHT] [WIDTH]
   - 減算するレイヤ
-- **int** new_layer [HEIGHT] [WIDTH] [3]
+- **struct color** new_layer [HEIGHT] [WIDTH]
   - 減算されたレイヤの出力先レイヤ
 
 lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_layerに出力します。
@@ -180,13 +191,13 @@ lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_l
 
 作成者：つまみ
 
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 変換されるレイヤ
 - **double** matrix [2] [2]
   - 変換に使う2*2行列
 - **int** origin_x, origin_y
   - 変換するにあたって原点として扱う点の座標
-- **int** new_layer [HEIGHT] [WIDTH] [3]
+- **struct color** new_layer [HEIGHT] [WIDTH]
   - 変換先レイヤ
 
 レイヤを指定された行列で変換します。
@@ -197,7 +208,7 @@ lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_l
 
 作成者：つまみ
 
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 塗りつぶすレイヤ
 - **struct color** c
   - 塗りつぶす色
@@ -215,7 +226,7 @@ lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_l
 
 ### void draw_background (未完成)
 
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 描画する対象のレイヤ
 
 背景を渡されたレイヤに保存します。
@@ -226,7 +237,7 @@ lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_l
 
 作成者：つまみ
 
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 描画する対象のレイヤ
 
 クッキーのカウンタを表示するための帯をレイヤに出力します。
@@ -235,7 +246,7 @@ lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_l
 
 ### void bake_cookie (未完成)
 
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 描画する対象のレイヤ
 
 中央のクッキーを渡されたレイヤに上書きします。
@@ -256,7 +267,7 @@ lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_l
   - 中央の座標
 - **int** r
   - 円の半径
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 描画する対象のレイヤ
 
 円を描画し指定されたレイヤに上書きします。
@@ -273,7 +284,7 @@ lower_layerとupper_layerのかぶった部分をlower_layerから引き、new_l
   - 頂点数
 - **struct color** c
   - 塗りつぶす色
-- **int** layer [HEIGHT] [WIDTH] [3]
+- **struct color** layer [HEIGHT] [WIDTH]
   - 描画する対象のレイヤ
 
 指定した頂点集合を結んだ多角形を塗り潰し、指定されたレイヤに描画します。垂直な線を引くと塗り潰しがバグるので、垂直に線を引きたいときは1px横にずらすなどして下さい。
