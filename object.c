@@ -37,10 +37,35 @@ void draw_cookieband(struct color layer[HEIGHT][WIDTH]){
 }
 
 void bake_cookie(struct color layer[HEIGHT][WIDTH]){
-    //仮
     clear_layer(layer);
-    struct color cookie = {164, 101, 39, 1.0};
-    img_fillcircle(cookie,100,140,60,layer);
+    int center_x = 100;
+    int center_y = 140;
+    struct color shadow = {0x60, 0x38, 0x23, 1.0};
+    struct color light = {0xad, 0x8b, 0x60, 0.0};
+    struct color c;
+    //img_fillcircle(shadow,center_x,center_y,60,layer);
+
+    for(int r = 60; r > 0; r--){
+        light.a = sqrt(3600-r*r)/60.0;
+        c = mix_color(light,shadow);
+        c.a = 1.0;
+        img_fillcircle(c,center_x,center_y,r,layer);
+    }
+
+    int x1[] = {80, 95, 105,102,90, 85, 75 };
+    int y1[] = {160,165,150,145,135,135,145};
+    struct color chocochip[HEIGHT][WIDTH];
+    struct color choco_color = {0x5c,0x34,0x21,1.0};
+    clear_layer(chocochip);
+    fill_polygon(x1,y1,7,choco_color,chocochip);
+    struct color temp[HEIGHT][WIDTH];
+    merge_layer(chocochip);
+    img_write();
+    unite_layer(layer,chocochip,temp);
+    merge_layer(temp);
+    img_write();
+    clear_layer(layer);
+    copy_layer(layer,temp);
 }
 
 void bake_background_cookie(void);
