@@ -16,6 +16,8 @@ int main(void){
         merge_layer(background);
         merge_layer(cookieband);
         merge_layer(cookie);
+        pour_milk(i);
+        pour_milk(i+4);
         img_write();
     }
     return 0;

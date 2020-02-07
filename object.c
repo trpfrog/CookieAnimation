@@ -60,15 +60,29 @@ void bake_cookie(struct color layer[HEIGHT][WIDTH]){
     fill_polygon(x1,y1,7,choco_color,chocochip);
     struct color temp[HEIGHT][WIDTH];
     merge_layer(chocochip);
-    img_write();
     unite_layer(layer,chocochip,temp);
     merge_layer(temp);
-    img_write();
     clear_layer(layer);
     copy_layer(layer,temp);
 }
 
 void bake_background_cookie(void);
+
+void pour_milk(int t){
+    double omega = 1;
+    struct color milk_color = {225,225,224,0.8};
+    for(int x=0; x<WIDTH; x++){
+        int endpoint = (int)(7*sin(omega*t+x/50.0)+50);
+        for(int y = 0; y<=endpoint; y++){
+            int diff = 10;
+            struct color c = {(milk_color.r-diff)+(diff/endpoint*y),
+                              (milk_color.g-diff)+(diff/endpoint*y),
+                              (milk_color.b-diff)+(diff/endpoint*y),
+                              (milk_color.a-0.3)+(0.3/endpoint*y)};
+            put_pixel(c,x,y);
+        }
+    }
+}
 
 //template_function
 void img_fillcircle(struct color c, int x, int y, double r, struct color layer[HEIGHT][WIDTH]) {
