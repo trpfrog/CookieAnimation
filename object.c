@@ -51,19 +51,37 @@ void bake_cookie(struct color layer[HEIGHT][WIDTH]){
         c.a = 1.0;
         img_fillcircle(c,center_x,center_y,r,layer);
     }
-
-    int x1[] = {80, 95, 105,102,90, 85, 75 };
-    int y1[] = {160,165,150,145,135,135,145};
+    int x[][14] = {{80, 95, 105,102,90, 85, 75, 75, 75, 75, 75, 75, 75, 75},
+                   {86, 94, 102,105,97, 87, 83, 82, 82, 82, 82, 82, 82, 82},
+                   {135,140,142,138,133,124,123,125,125,125,125,125,125,125},
+                   {137,140,139,140,138,133,124,121,123,127,132,132,132,132},
+                   {94, 99, 95, 91, 88, 84, 79, 76, 73, 71, 74, 79, 81, 91},
+                   {108,117,121,119,114,111,108,103,102,105,105,105,105,105},
+                   {79, 85, 77, 73, 76, 76, 76, 76, 76, 76, 76, 76, 76, 76}
+                 };
+    int y[][14] = {{160,165,150,145,135,135,145,145,145,145,145,145,145,145},
+                   {186,184,181,175,172,175,181,184,184,184,184,184,184,184},
+                   {164,160,147,146,148,145,156,158,158,158,158,158,158,158},
+                   {133,131,127,121,122,119,118,119,122,126,127,127,127,127},
+                   {117,113,105,102,105,105,103,103,105,108,112,112,114,117},
+                   {117,112,103,100,98, 99, 98, 101,110,116,116,116,116,116},
+                   {127,122,115,120,126,126,126,126,126,126,126,126,126,126}
+                 };
+    int dots[] = {7,8,8,11,14,10,5};
     struct color chocochip[HEIGHT][WIDTH];
-    struct color choco_color = {0x5c,0x34,0x21,1.0};
-    clear_layer(chocochip);
-    fill_polygon(x1,y1,7,choco_color,chocochip);
     struct color temp[HEIGHT][WIDTH];
-    merge_layer(chocochip);
-    unite_layer(layer,chocochip,temp);
-    merge_layer(temp);
-    clear_layer(layer);
-    copy_layer(layer,temp);
+    struct color choco_color = {0x5c,0x34,0x21,1.0};
+
+    for(int i=0; i<7; i++){
+        clear_layer(chocochip);
+        fill_polygon(x[i],y[i],dots[i],choco_color,chocochip);
+        merge_layer(chocochip);
+        unite_layer(layer,chocochip,temp);
+        merge_layer(temp);
+        clear_layer(layer);
+        copy_layer(layer,temp);
+    }
+
 }
 
 void bake_background_cookie(void);
