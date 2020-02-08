@@ -84,7 +84,19 @@ void bake_cookie(struct color layer[HEIGHT][WIDTH]){
 
 }
 
-void bake_background_cookie(void);
+void bake_background_cookie(struct color layer[HEIGHT][WIDTH], int t){
+    struct color light = {0xad, 0x8b, 0x60, 0.0};
+    struct color choco_color = {0x5c, 0x34, 0x21, 1.0};
+    for (int i; i < 41;i++){
+        img_fillcircle(light,5*i,300-(5*t)%220,8,layer);
+        img_fillcircle(choco_color, 5 * i - 1, (300 - (5 * t) % 220) + 2, 3, layer);
+        img_fillcircle(choco_color, 5 * i + 4, (300 - (5 * t) % 220) + 2, 1, layer);
+        img_fillcircle(choco_color, 5 * i + 1, (300 - (5 * t) % 220) - 4, 1, layer);
+        img_fillrect(choco_color, 5 * i - 1, (300 - (5 * t) % 220) + 5, 3, 1, layer);
+        img_fillrect(choco_color, 5 * i - 2, (300 - (5 * t) % 220) - 4, 3, 1, layer);
+        img_fillrect(choco_color, 5 * i + 4, (300 - (5 * t) % 220) - 2, 3, 1, layer);
+    }
+}
 
 void pour_milk(int t){
     double omega = 1;
