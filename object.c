@@ -113,10 +113,18 @@ void pour_milk(int t){
     }
 }
 
+int max(int i, int j){
+    return i > j ? i : j;
+}
+
+int min(int i, int j){
+    return i < j ? i : j;
+}
+
 //template_function
 void img_fillcircle(struct color c, int x, int y, double r, struct color layer[HEIGHT][WIDTH]) {
-    int imin = x - r - 1, imax = x + r + 1;
-    int jmin = y - r - 1, jmax = y + r + 1;
+    int imin = max((int)(x - r - 1), 0), imax = min((int)(x + r + 1),WIDTH-1);
+    int jmin = max((int)(y - r - 1), 0), jmax = min((int)(y + r + 1),HEIGHT-1);
     int i, j;
     for(j = jmin; j <= jmax; ++j) {
         for(i = imin; i <= imax; ++i) {
@@ -129,8 +137,8 @@ void img_fillcircle(struct color c, int x, int y, double r, struct color layer[H
 
 //template_function
 void img_fillrect(struct color c, double x, double y, double w, double h, struct color layer[HEIGHT][WIDTH]){
-    int imin = (int)(x - w / 2), imax = (int)(x + w / 2);
-    int jmin = (int)(y - h / 2), jmax = (int)(y + h / 2);
+    int imin = max((int)(x - w / 2),0), imax = min((int)(x + w / 2),WIDTH-1);
+    int jmin = max((int)(y - h / 2),0), jmax = min((int)(y + h / 2),HEIGHT-1);
     int i, j;
     for (j = jmin; j <= jmax; ++j){
         for (i = imin; i <= imax; ++i){
