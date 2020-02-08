@@ -6,21 +6,13 @@
 #include "layer.h"
 
 void draw_background(struct color layer[HEIGHT][WIDTH]){
-    /*
-    struct color base_color = {15,100,160,1.0};
-    for (int i = 0; i < HEIGHT; i++){
-        for(int j = 0; j<WIDTH; j++){
-            layer[i][j] = base_color;
-        }
-    }
-    */
+    clear_layer(layer);
     struct color base_color = {15,100,160,1.0};
     struct color base_color2 = {30,144,255,1.0};
+    img_fillrect(base_color,100, 150, 200, 300,layer);
     for (double i = 0; i < 20; i++){
         if((int)i%2 == 0){
-            img_fillrect(base_color2,(double)i*10, 150, 10, 300,layer);
-        }else if((int)i%2 == 1){
-            img_fillrect(base_color,(double)i*10, 150, 10, 300,layer);
+            img_fillrect(base_color2,i*11+1, 150, 10, 300,layer);
         }
     }
 }
