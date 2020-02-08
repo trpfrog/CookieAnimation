@@ -7,12 +7,20 @@
 
 void draw_background(struct color layer[HEIGHT][WIDTH]){
     clear_layer(layer);
-    struct color base_color = {15,100,160,1.0};
-    struct color base_color2 = {30,144,255,1.0};
+    struct color base_color = {40,107,142,1.0};
+    struct color base_color2 = {34,93,128,1.0};
     img_fillrect(base_color,100, 150, 200, 300,layer);
     for (double i = 0; i < 20; i++){
         if((int)i%2 == 0){
             img_fillrect(base_color2,i*11+1, 150, 10, 300,layer);
+        }
+    }
+    struct color black = {0,0,0,0.5};
+    double max_alpha = black.a;
+    for(int y=0; y<HEIGHT; y++){
+        black.a = ((120-y > 0 ? 120-y : y-120)/300.0*max_alpha);
+        for(int x=0; x<WIDTH; x++){
+            layer[y][x] = mix_color(black,layer[y][x]);
         }
     }
 }
