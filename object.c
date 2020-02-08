@@ -6,14 +6,14 @@
 #include "layer.h"
 
 void draw_background(struct color layer[HEIGHT][WIDTH]){
-    //仮
+    /*
     struct color base_color = {15,100,160,1.0};
     for (int i = 0; i < HEIGHT; i++){
         for(int j = 0; j<WIDTH; j++){
             layer[i][j] = base_color;
         }
     }
-    /*
+    */
     struct color base_color = {15,100,160,1.0};
     struct color base_color2 = {30,144,255,1.0};
     for (double i = 0; i < 20; i++){
@@ -23,7 +23,6 @@ void draw_background(struct color layer[HEIGHT][WIDTH]){
             img_fillrect(base_color,(double)i*10, 150, 10, 300,layer);
         }
     }
-    */
 }
 
 void draw_cookieband(struct color layer[HEIGHT][WIDTH]){
