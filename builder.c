@@ -31,6 +31,7 @@ int main(void){
         merge_layer(cookie);
         pour_milk(t);
         pour_milk(t+4);
+        draw_cursor(100, 70);
         img_write();
     }
     return 0;
