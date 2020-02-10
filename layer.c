@@ -4,6 +4,7 @@
 #include "img.h"
 #include "layer.h"
 #include "object.h"
+#include "drawtool.h"
 
 bool is_valid_alpha(struct color c){
     return 0 <= c.a && c.a <= 1;

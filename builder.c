@@ -3,6 +3,7 @@
 #include "img.h"
 #include "object.h"
 #include "layer.h"
+#include "drawtool.h"
 
 int main(void){
     struct color background[HEIGHT][WIDTH];

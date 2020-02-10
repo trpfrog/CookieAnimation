@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include "img.h"
 #include "object.h"
+#include "layer.h"
+#include "drawtool.h"
 
 static unsigned char buf[HEIGHT][WIDTH][3];
 static int filecnt = 0;
