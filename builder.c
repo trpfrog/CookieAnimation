@@ -10,18 +10,23 @@ int main(void){
     struct color background_cookie[HEIGHT][WIDTH];
     struct color cookie[HEIGHT][WIDTH];
     struct color cookieband[HEIGHT][WIDTH];
+
     draw_background(background);
     draw_cookieband(cookieband);
     bake_cookie(cookie);
-    for(int i=0; i<1; i++){
+
+    for(int t=0; t<1; t++){
         img_clear();
         bake_background_cookie(background_cookie, i);
         merge_layer(background);
-        merge_layer(background_cookie);
+        //merge_layer(background_cookie);
+        draw_glow_circle();
+        draw_shine(3*t,4);
+        draw_shine(3*t+30,4);
         merge_layer(cookieband);
         merge_layer(cookie);
-        pour_milk(i);
-        pour_milk(i+4);
+        pour_milk(t);
+        pour_milk(t+4);
         img_write();
     }
     return 0;
