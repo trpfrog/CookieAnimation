@@ -17,7 +17,7 @@ int main(void){
 
     for(int t=0; t<1; t++){
         img_clear();
-        bake_background_cookie(background_cookie, i);
+        bake_background_cookie(background_cookie, t);
         merge_layer(background);
         //merge_layer(background_cookie);
         draw_glow_circle();
