@@ -83,16 +83,19 @@ void bake_cookie(struct color layer[HEIGHT][WIDTH]){
 
 void bake_background_cookie(struct color layer[HEIGHT][WIDTH], int t){
     clear_layer(layer);
-    struct color light = {0xad, 0x8b, 0x60, 0.0};
+    int x0, y0;
+    struct color light = {0xad, 0x8b, 0x60, 1.0};
     struct color choco_color = {0x5c, 0x34, 0x21, 1.0};
-    for (int i = 0; i < 41;i++){
-        img_fillcircle(light,5*i,300-(5*t)%220,8,layer);
-        img_fillcircle(choco_color, 5 * i - 1, (300 - (5 * t) % 220) + 2, 3, layer);
-        img_fillcircle(choco_color, 5 * i + 4, (300 - (5 * t) % 220) + 2, 1, layer);
-        img_fillcircle(choco_color, 5 * i + 1, (300 - (5 * t) % 220) - 4, 1, layer);
-        img_fillrect(choco_color, 5 * i - 1, (300 - (5 * t) % 220) + 5, 3, 1, layer);
-        img_fillrect(choco_color, 5 * i - 2, (300 - (5 * t) % 220) - 4, 3, 1, layer);
-        img_fillrect(choco_color, 5 * i + 4, (300 - (5 * t) % 220) - 2, 3, 1, layer);
+    for (int i = 0; i < 10;i++){
+        x0 = 20 * i;
+        y0 = 300 - (10 * t - (int)(100 * sin(i * 1.6))) % 250;
+        img_fillcircle(light, 20 * i, y0, 8, layer);
+        img_fillcircle(choco_color, x0 - 1, y0 + 2, 3, layer);
+        img_fillcircle(choco_color, x0 + 4 , y0 + 2, 1, layer);
+        img_fillcircle(choco_color, x0 + 1 , y0 - 4, 1, layer);
+        img_fillrect(choco_color, x0 - 1 , y0 + 5, 3, 1, layer);
+        img_fillrect(choco_color, x0 - 2 , y0 - 4, 3, 1, layer);
+        img_fillrect(choco_color, x0 + 4 , y0 - 2, 3, 1, layer);
     }
 }
 
