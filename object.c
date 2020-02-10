@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 #include "img.h"
 #include "object.h"
 #include "layer.h"
@@ -78,7 +79,6 @@ void bake_cookie(struct color layer[HEIGHT][WIDTH]){
         merge_layer(chocochip);
         unite_layer(layer,chocochip);
     }
-
 }
 
 void bake_background_cookie(struct color layer[HEIGHT][WIDTH], int t){
@@ -112,8 +112,53 @@ void pour_milk(int t){
     }
 }
 
-void draw_shine(struct color layer[HEIGHT][WIDTH]){
+int rest(int i,int divisor){
+    while(i<0){
+        i += divisor;
+    }
+    return i%divisor;
+}
+
+double get_degree(double x, double y){
+    double d = atan2(y,x)*180/3.14159265359;
+    return d >= 0 ? d : d+360;
+}
+
+void draw_shine(int time, int wings){
     int center_x = 100;
-    int center_y = 120;
+    int center_y = 140;
+    struct color shine_color = {200,200,200,0};
+    double X, Y, r;
+    double gradation_r = 120.0;
+
+    for(int y=0; y<HEIGHT; y++){
+        for(int x=0; x<WIDTH; x++) {
+
+            X = x-center_x; Y = y-center_y;
+            r = sqrt(pow(X,2)+pow(Y,2));
+            double degree = get_degree(X,Y);
+
+            for(int i=0; i<wings; i++){
+                double d1 = rest(time+360/wings*i,360);
+                double d2 = rest(time+360/(2*wings)+360/wings*i,360);
+                if((d1<=degree && degree<=d2 && d1<=d2) || ((d1<=degree || degree<=d2) && d1>d2)){
+                    shine_color.a = 1 - r/gradation_r;
+                    put_pixel(shine_color,x,y);
+                }
+            }
+
+        }
+    }
+}
+
+void draw_glow_circle(void){
+    struct color light = {0xff,0xff,0xff,0.0};
+    struct color layer[HEIGHT][WIDTH];
+    clear_layer(layer);
+    for(int r = 120; r > 0; r--){
+        light.a = 0.015;
+        img_fillcircle(light,100,140,r,layer);
+    }
+    merge_layer(layer);
 }
 
