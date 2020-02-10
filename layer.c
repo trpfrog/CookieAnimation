@@ -28,22 +28,20 @@ void clear_layer(struct color layer[HEIGHT][WIDTH]){
     }
 }
 
-void unite_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_layer[HEIGHT][WIDTH], struct color new_layer[HEIGHT][WIDTH]){
-    copy_layer(new_layer,lower_layer);
+void unite_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_layer[HEIGHT][WIDTH]){
     for(int i=0; i<HEIGHT; i++){
         for(int j=0; j<WIDTH; j++){
-            new_layer[i][j] = mix_color(upper_layer[i][j],new_layer[i][j]);
+            lower_layer[i][j] = mix_color(upper_layer[i][j],lower_layer[i][j]);
         }
     }
 }
 
-void subtract_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_layer[HEIGHT][WIDTH], struct color new_layer[HEIGHT][WIDTH]){
-    copy_layer(new_layer,lower_layer);
+void subtract_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_layer[HEIGHT][WIDTH]){
     struct color invisible = {0,0,0,0.0};
     for(int i=0; i<HEIGHT; i++){
         for(int j=0; j<WIDTH; j++){
             if(upper_layer[i][j].a<=0) continue;
-            new_layer[i][j] = invisible;
+            lower_layer[i][j] = invisible;
         }
     }
 }

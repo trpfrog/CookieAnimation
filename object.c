@@ -76,10 +76,7 @@ void bake_cookie(struct color layer[HEIGHT][WIDTH]){
         clear_layer(chocochip);
         fill_polygon(x[i],y[i],dots[i],choco_color,chocochip);
         merge_layer(chocochip);
-        unite_layer(layer,chocochip,temp);
-        merge_layer(temp);
-        clear_layer(layer);
-        copy_layer(layer,temp);
+        unite_layer(layer,chocochip);
     }
 
 }
