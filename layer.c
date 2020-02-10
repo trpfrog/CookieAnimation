@@ -76,4 +76,9 @@ void fill_painted_pixel(struct color layer[HEIGHT][WIDTH], struct color c){
     }
 }
 
-void gradate_painted_pixel(int layer[HEIGHT][WIDTH][3]);
+void rotate_layer(struct color layer[HEIGHT][WIDTH], double degree, int center_x, int center_y){
+    double t = 3.14159265359/180.0*degree;
+    double matrix[2][2] = {{cos(t),-sin(t)},
+                           {sin(t), cos(t)}};
+    linear_transform(layer,matrix,center_x,center_y);
+}
