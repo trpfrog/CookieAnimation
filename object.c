@@ -164,3 +164,14 @@ void draw_glow_circle(void){
     }
     merge_layer(layer);
 }
+
+void draw_glow_circle(void){
+    struct color light = {0xff,0xff,0xff,0.0};
+    struct color layer[HEIGHT][WIDTH];
+    clear_layer(layer);
+    for(int r = 120; r > 0; r--){
+        light.a = 0.015;
+        img_fillcircle(light,100,140,r,layer);
+    }
+    merge_layer(layer);
+}

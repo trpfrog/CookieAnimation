@@ -31,7 +31,7 @@ void clear_layer(struct color layer[HEIGHT][WIDTH]){
 void unite_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_layer[HEIGHT][WIDTH]){
     for(int i=0; i<HEIGHT; i++){
         for(int j=0; j<WIDTH; j++){
-            lower_layer[i][j] = mix_color(upper_layer[i][j],lower_layer[i][j]);
+            lower_layer[i][j] = lower_layer[i][j].a > 0 ? mix_color(upper_layer[i][j],lower_layer[i][j]) : upper_layer[i][j];
         }
     }
 }

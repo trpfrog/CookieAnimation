@@ -8,15 +8,20 @@
 
 int main(void){
     struct color background[HEIGHT][WIDTH];
-    //struct color background_cookie[HEIGHT][WIDTH];
+    struct color background_cookie[HEIGHT][WIDTH];
     struct color cookie[HEIGHT][WIDTH];
     struct color cookieband[HEIGHT][WIDTH];
+
     draw_background(background);
     draw_cookieband(cookieband);
     bake_cookie(cookie);
     for(int t=0; t<24; t++){
         img_clear();
         //bake_background_cookie(background_cookie, t);
+
+    for(int t=0; t<1; t++){
+        img_clear();
+        bake_background_cookie(background_cookie, t);
         merge_layer(background);
         //merge_layer(background_cookie);
         draw_glow_circle();
