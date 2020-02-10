@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <math.h>
 #include "img.h"
 #include "layer.h"
 #include "object.h"
@@ -47,20 +48,23 @@ void subtract_layer(struct color lower_layer[HEIGHT][WIDTH], struct color upper_
     }
 }
 
-void linear_transform(struct color layer[HEIGHT][WIDTH],
-        double matrix[2][2],int origin_x, int origin_y, struct color new_layer[HEIGHT][WIDTH]){
+void linear_transform(struct color layer[HEIGHT][WIDTH], double matrix[2][2],int origin_x, int origin_y){
+    struct color new_layer[HEIGHT][WIDTH];
+    clear_layer(new_layer);
     double a,b,c,d;
     a = matrix[0][0]; b = matrix[0][1]; c = matrix[1][0]; d = matrix[1][1];
     int x1,y1;
     for(int y=0; y<HEIGHT; y++){
         for(int x=0; x<WIDTH; x++){
-            x1 = (int)(a*(x-origin_x) + b*(y-origin_y) + origin_x);
-            y1 = (int)(c*(x-origin_x) + d*(y-origin_y) + origin_y);
+            x1 = (int)round(a*(x-origin_x) + b*(y-origin_y) + origin_x);
+            y1 = (int)round(c*(x-origin_x) + d*(y-origin_y) + origin_y);
             if(0 <= x1 && x1 < WIDTH && 0 <= y1 && y1 < HEIGHT){
                 new_layer[y1][x1] = layer[y][x];
             }
         }
     }
+    clear_layer(layer);
+    copy_layer(layer,new_layer);
 }
 
 void fill_painted_pixel(struct color layer[HEIGHT][WIDTH], struct color c){
