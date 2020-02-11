@@ -10,6 +10,8 @@
 
 typedef void (*function)(int,int,struct color [HEIGHT][WIDTH]);
 function figurefunc[11];
+int COOKIE_DUNKER[9][45];
+int ACHIEVEMENT[6][61];
 int COOKIES[13][27];
 
 void print_figure(int *x, int *y, int dots, int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
@@ -107,6 +109,31 @@ void initialize_funcarray(void){
             COOKIES[i][j] = cc[i][j];
         }
     }
+    int ac[][62] = {{2,1,7,1,4,1,50,1,10,1,12,1,-1,-2},
+                     {1,1,1,1,6,1,7,2,9,2,9,2,8,1,15,1,10,1,5,2,5,1,-1,-2},
+                     {0,1,3,1,2,2,1,1,4,1,1,1,2,1,1,1,3,1,1,1,2,1,1,2,1,1,2,1,2,1,1,3,2,3,4,1,2,1,1,3,2,1,2,2,3,2,1,1,1,2,1,1,2,1,2,3,-1,-2},
+                     {0,5,1,1,3,3,2,1,1,4,1,1,3,1,1,4,1,1,1,1,1,1,1,4,1,1,2,1,2,1,5,1,2,1,1,1,2,1,1,1,1,1,2,1,1,1,3,2,3,4,1,1,2,1,-1,-2},
+                     {0,1,3,1,1,1,3,1,2,1,1,1,1,1,5,1,1,1,2,1,4,1,1,1,1,1,1,1,4,1,2,1,2,1,5,1,2,1,1,1,2,1,1,1,1,1,2,1,1,1,3,1,1,1,2,1,4,1,2,1,-1,-2},
+                     {0,1,3,1,2,2,1,1,2,1,1,1,2,3,3,1,4,3,1,1,1,1,1,1,2,3,1,1,2,1,3,1,5,3,1,1,2,1,1,1,2,2,3,2,1,1,2,1,2,3,2,3,-1,-2}};
+    for(int i=0;i<6;i++){
+        for(int j=0;ac[i][j]!=-2;j++){
+            ACHIEVEMENT[i][j] = ac[i][j];
+        }
+    }
+    int cd[][46] = {{2,4,16,2,5,2,16,2,15,2,17,-1,-2},
+                    {1,6,15,2,5,2,16,2,15,2,17,-1,-2},
+                    {0,3,3,1,15,2,23,2,15,2,17,-1,-2},
+                    {0,2,7,4,3,4,2,2,1,3,1,2,2,4,7,5,1,2,2,2,1,5,2,2,1,3,2,4,3,3,1,-1,-2},
+                    {0,2,6,2,2,2,1,2,2,2,1,4,3,2,1,2,2,2,5,2,2,2,1,2,2,2,1,2,2,2,1,4,3,2,2,2,1,5,-1,-2},
+                    {0,2,6,2,2,2,1,2,2,2,1,3,4,2,1,6,1,3,1,2,2,2,1,2,2,2,1,2,2,2,1,3,4,6,1,2,3,-1,-2},
+                    {0,3,3,1,1,2,2,2,1,2,2,2,1,4,3,2,1,2,9,2,2,2,1,2,2,2,1,2,2,2,1,4,3,2,5,2,3,-1,-2},
+                    {1,6,1,2,2,2,1,2,2,2,1,2,1,2,2,2,1,2,2,2,5,2,2,2,1,2,2,2,1,2,2,2,1,2,1,2,2,2,2,2,1,2,3,-1,-2},
+                    {2,4,3,4,3,4,2,2,2,2,1,2,2,4,7,5,2,5,1,2,2,2,1,2,2,2,2,4,2,2,3,-1,-2}};
+    for(int i=0;i<9;i++){
+        for(int j=0;cd[i][j]!=-2;j++){
+            COOKIE_DUNKER[i][j] = cd[i][j];
+        }
+    }
 }
 
 void apply_figure(int figure,int x,int y, struct color layer[HEIGHT][WIDTH]){
@@ -146,4 +173,39 @@ void print_cookies(struct color layer[HEIGHT][WIDTH]){
     }
 }
 
+void print_achievement(struct color layer[HEIGHT][WIDTH],int t){
+    struct color white = {255,255,255,1.0};
+    int pos_y = t-14+6;
+    for(int i=0; i<6; i++){
+        int pos_x = 60;
+        if(--pos_y<0) break;
+        for(int j=0; ACHIEVEMENT[i][j]!=-1; j++){
+            if(j%2==1){
+                for(int k=0; k<ACHIEVEMENT[i][j]; k++){
+                    layer[pos_y][pos_x++] = white;
+                }
+            }else{
+                pos_x += ACHIEVEMENT[i][j];
+            }
+        }
+    }
+}
+
+
+void print_cookiedunker(struct color layer[HEIGHT][WIDTH], int t){
+    struct color gray = {200,200,200,1.0};
+    int pos_y = t-26+9;
+    for(int i=0; i<9; i++){
+        int pos_x = 60;
+        if(--pos_y<0) break;
+        for(int j=0; COOKIE_DUNKER[i][j]!=-1; j++){
+            if(j%2==1){
+                for(int k=0; k<COOKIE_DUNKER[i][j]; k++){
+                    layer[pos_y][pos_x++] = gray;
+                }
+            }else{
+                pos_x += COOKIE_DUNKER[i][j];
+            }
+        }
+    }
 }

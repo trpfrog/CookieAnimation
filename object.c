@@ -219,16 +219,15 @@ for (int i = 0; i < 28; i++){
 
 void draw_pop_up(struct color layer[HEIGHT][WIDTH],int t){
     clear_layer(layer);
+    int pop_up_start = 155;
+    t -= pop_up_start;
+    if(t<0) return;
     struct color black = {22,22,22,1.0};
     struct color gold = {209, 174, 21, 1.0};
-    if(t<33){
-        img_fillrect(gold, 100, -16 + t, 120, 31, layer);
-        img_fillrect(black, 100, -16 + t-1, 117, 28, layer);
-        draw_pop_up_icon(layer, 50, -16 + t);
-    }
-    if(33<=t){
-        img_fillrect(gold, 100, 16, 120, 31, layer);
-        img_fillrect(black, 100, 15, 117, 28, layer);
-        draw_pop_up_icon(layer, 50, 16);
-    }
+    t = t<33 ? t : 33;
+    img_fillrect(gold, 100, -16 + t, 120, 31, layer);
+    img_fillrect(black, 100, -16 + t-1, 117, 28, layer);
+    draw_pop_up_icon(layer, 50, -16 + t);
+    print_achievement(layer,t);
+    print_cookiedunker(layer,t);
 }
