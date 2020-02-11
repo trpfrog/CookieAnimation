@@ -54,3 +54,4 @@ dkms.conf
 *.ppm
 .DS_Store
 *.gif
+*.json
