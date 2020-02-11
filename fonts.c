@@ -31,52 +31,43 @@ void print_segment(bool top, bool upper_left, bool upper_right, bool middle, boo
     if(bottom)      img_fillrect(white, origin_x+5,   origin_y+1 , 6,3, layer);
 }
 
-void print_zero(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_0(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,true,true,false,true,true,true,origin_x,origin_y,layer);
 }
 
-void print_one(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_1(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(false,false,true,false,false,true,false,origin_x,origin_y,layer);
-//    int x[] = {1,3,6,6,3,3};
-//    int y[] = {10,14,14,0,0,10};
-//    print_figure(x,y,6,origin_x,origin_y,layer);
 }
 
-void print_two(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_2(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,false,true,true,true,false,true,origin_x,origin_y,layer);
-//    int x[] = { 1, 1, 3, 6, 8, 8, 4, 3, 8, 8, 1, 1, 6, 6, 4, 4};
-//    int y[] = {10,12,14,14,12, 8, 5, 2, 2, 0, 0, 4, 9, 12,12,10};
-//    print_figure(x,y,16,origin_x,origin_y,layer);
 }
 
-void print_three(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_3(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,false,true,true,false,true,true,origin_x,origin_y,layer);
-//    int x[] = {1,1,4,6,8,8,3,3,8,8,1,1,6,6,4,4};
-//    int y[] = {10,12,14,14,12,8,3,2,2,0,0,3,8,12,12,10};
-//    print_figure(x,y,16,origin_x,origin_y,layer);
 }
 
-void print_four(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_4(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(false,true,true,true,false,true,false,origin_x,origin_y,layer);
 }
 
-void print_five(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_5(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,true,false,true,false,true,true,origin_x,origin_y,layer);
 }
 
-void print_six(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_6(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,true,false,true,true,true,true,origin_x,origin_y,layer);
 }
 
-void print_seven(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_7(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,false,true,false,false,true,false,origin_x,origin_y,layer);
 }
 
-void print_eight(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_8(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,true,true,true,true,true,true,origin_x,origin_y,layer);
 }
 
-void print_nine(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
+void print_9(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(true,true,true,true,false,true,true,origin_x,origin_y,layer);
 }
 
@@ -84,17 +75,18 @@ void print_comma(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     print_segment(false,false,false,false,true,false,false,origin_x,origin_y,layer);
 }
 
+
 void initialize_funcarray(void){
-    figurefunc[0] = print_zero;
-    figurefunc[1] = print_one;
-    figurefunc[2] = print_two;
-    figurefunc[3] = print_three;
-    figurefunc[4] = print_four;
-    figurefunc[5] = print_five;
-    figurefunc[6] = print_six;
-    figurefunc[7] = print_seven;
-    figurefunc[8] = print_eight;
-    figurefunc[9] = print_nine;
+    figurefunc[0] = print_0;
+    figurefunc[1] = print_1;
+    figurefunc[2] = print_2;
+    figurefunc[3] = print_3;
+    figurefunc[4] = print_4;
+    figurefunc[5] = print_5;
+    figurefunc[6] = print_6;
+    figurefunc[7] = print_7;
+    figurefunc[8] = print_8;
+    figurefunc[9] = print_9;
     figurefunc[10] = print_comma;
 }
 
