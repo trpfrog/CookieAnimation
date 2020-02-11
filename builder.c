@@ -24,6 +24,7 @@ int main(void){
     draw_background(background);
     bake_cookie(cookie);
     initialize_funcarray();
+    struct color figure[HEIGHT][WIDTH];
     int output_files = 1;
     printf("Now printing... 00%%done");
     for(int t=0; t<output_files; t++){
@@ -38,10 +39,15 @@ int main(void){
         draw_shine(3*t,4);
         draw_shine(3*t+30,4);
         draw_cookieband();
-        merge_layer(cookie);
-        pour_milk(t);
-        pour_milk(t+4);
+
         draw_cursor(100, 70);
+
+        int h = 0;
+        if(50<t) h = t<150 ? t-50 : 100;
+        pour_milk(t,0.7*h);
+        merge_layer(cookie);
+        pour_milk(t+15,0.7*h);
+
         merge_layer(pop_up);
         print_number(623456789000+98765321l*t,figure);
         print_cookies(figure);
