@@ -127,8 +127,9 @@ void fill_polygon(int x[], int y[], int dots, struct color c, struct color layer
     //枠線と頂点を塗る
     for(int draw_x = x_min; draw_x <= x_max; draw_x++){
         for(int draw_y = y_min; draw_y <= y_max; draw_y++) {
-            if (layer[draw_y][draw_x].a != ignore || layer[draw_y][draw_x].a != marker) continue;
-            layer[draw_y][draw_x] = mix_color(layer[draw_y][draw_x],c);
+            if (layer[draw_y][draw_x].a == ignore || layer[draw_y][draw_x].a == marker){
+                layer[draw_y][draw_x] = mix_color(layer[draw_y][draw_x],c);
+            }
         }
     }
 }
