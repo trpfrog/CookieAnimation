@@ -75,7 +75,8 @@ void print_9(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
 }
 
 void print_comma(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
-    print_segment(false,false,false,false,true,false,false,origin_x,origin_y,layer);
+    struct color white = {255,255,255,1.0};
+    img_fillrect(white,origin_x+2,origin_y,2,6,layer);
 }
 
 
@@ -143,7 +144,7 @@ void apply_figure(int figure,int x,int y, struct color layer[HEIGHT][WIDTH]){
 
 void print_number(long num, struct color layer[HEIGHT][WIDTH]){
     clear_layer(layer);
-    int pos = 28;
+    int pos = 25;
     for(int i=0; i<12; i++){
         if(i%3==0 && i!=0){
             figurefunc[10](pos,252,layer);
