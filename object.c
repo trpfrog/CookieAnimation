@@ -27,12 +27,11 @@ void draw_background(struct color layer[HEIGHT][WIDTH]){
     }
 }
 
-void draw_cookieband(struct color layer[HEIGHT][WIDTH]){
-    clear_layer(layer);
+void draw_cookieband(void){
     struct color c = {0,0,0,0.5};
     for(int i=230; i<=270; i++){
         for(int j=0; j<WIDTH; j++){
-            layer[i][j] = c;
+            put_pixel(c,j,i);
         }
     }
 }
@@ -180,16 +179,55 @@ void draw_cursor(int x0, int y0){
     }
 }
 
+void draw_pop_up_icon(struct color layer[HEIGHT][WIDTH], int x0, int y0){
+    struct color brown = {0xcb, 0x72, 0x48, 1.0};
+    struct color green = {0x98, 0xae, 0x86, 1.0};
+    struct color yellow = {0xf5, 0xe7, 0xb4, 1.0};
+    struct color blue = {0x1e, 0x38, 0x42, 1.0};
+    struct color white = {0xfb, 0xf8, 0xf4, 1.0};
+    int xbl[] = {5, 5, 5, 5, 5, 5, 5, 5, 4, 4, 3, 3, 3, 2, -1, -2, -2, -2, -3, -4, -4, -5, -5, -5, -5, -5, -5, -5};
+    int ybl[] = {2, 1, 0, -1, -2, -3, -4, -5, 3, -6, 6, 5, 4, 4, 4, 6, 5, 4, 3, 2, -6, 1, 0, -1, -2, -3, -4, -5};
+    int xg[] = {4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 0, 0, -1, -1, -1, -1, -2, -2, -2, -3, -3, -3, -3, -4, -4, -4, -4, -4, -4, -4};
+    int yg[] = {2, 1, -5, 3, 2, -6, 6, 5, -6, 4, 3, -6, 6, 5, 4, -6, 6, 5, 3, -6, 3, 2, -6, 2, 1, -5, -6, 1, 0, -1, -2, -3, -4, -5};
+    int xy[] = {4, 4, 4, 4, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -3, -3, -3, -3, -3};
+    int yy[] = {0, -1, -2, -3, -4, -5, -5, 2, 1, 0, -1, -2, -3, -4, -5, 3, 2, 1, 0, -1, -2, -3, -4, -5, 2, 1, 0, -1, -2, -3, -4, -5, 1, 0, -1, -2, -3, -4, -5, 0, -1, -2, -3, -4};
+    int xbr[] = {2, 1, 0, -1};
+    int ybr[] = {7, 7, 7, 7};
+    int xw[] = {3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1};
+int yw[] = {1, 0, -1, -2, -3, -4, 3, 2, 1, 0, -1, -2, -3, -4, 6, 5};
+for (int i = 0; i < 28; i++){
+    put_pixel(blue, x0 + xbl[i], y0 + ybl[i]);
+    }
+    for (int j = 0; j < 34;j++){
+        //put_pixel(green, x0 + xg[j], y0 + yg[j]);
+        layer[y0 + yg[j]][x0 + xg[j]] = green;    
+        }
+    for (int k = 0; k < 44;k++){
+        //put_pixel(yellow, x0 + xy[k], y0 + yy[k]);
+        layer[y0 + yy[k]][x0 + xy[k]] = yellow;
+    }
+    for (int l = 0; l < 4;l++){
+        //put_pixel(brown, x0 + xbr[l], y0 + ybr[l]);
+        layer[y0 + ybr[l]][x0 + xbr[l]] = brown;
+    }
+    for (int m = 0; m < 16;m++){
+        //put_pixel(white, x0 + xw[m], y0 + yw[m]);
+        layer[y0 + yw[m]][x0 + xw[m]] = white;
+    }
+}
+
 void draw_pop_up(struct color layer[HEIGHT][WIDTH],int t){
     clear_layer(layer);
     struct color black = {22,22,22,1.0};
     struct color gold = {209, 174, 21, 1.0};
-    if(t<36){
-        img_fillrect(gold, 100, -16 + t, 170, 31, layer);
-        img_fillrect(black, 100, -16 + t-1, 167, 28, layer);
+    if(t<33){
+        img_fillrect(gold, 100, -16 + t, 120, 31, layer);
+        img_fillrect(black, 100, -16 + t-1, 117, 28, layer);
+        draw_pop_up_icon(layer, 50, -16 + t);
     }
-    if(36<=t){
-        img_fillrect(gold, 100, 20, 170, 31, layer);
-        img_fillrect(black, 100, 19, 167, 28, layer);
+    if(33<=t){
+        img_fillrect(gold, 100, 16, 120, 31, layer);
+        img_fillrect(black, 100, 15, 117, 28, layer);
+        draw_pop_up_icon(layer, 50, 16);
     }
 }
