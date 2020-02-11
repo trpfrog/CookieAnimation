@@ -54,8 +54,8 @@ void fill_polygon(int x[], int y[], int dots, struct color c, struct color layer
     double marker    = -2.0;
     double ignore    = -3.0;
 
-    for(int i=0; i<HEIGHT; i++){
-        for(int j=0; j<WIDTH; j++){
+    for(int i=y_min; i<=y_max; i++){
+        for(int j=x_min; j<=x_max; j++){
             layer[i][j].a = invisible;
         }
     }
