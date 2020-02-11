@@ -46,7 +46,7 @@ void fill_polygon(int x[], int y[], int dots, struct color c, struct color layer
     for(int i=0; i<dots; i++){
         if (x_max < x[i]) x_max = x[i];
         if (x_min > x[i]) x_min = x[i];
-        if (y_max < x[i]) y_max = y[i];
+        if (y_max < y[i]) y_max = y[i];
         if (y_min > y[i]) y_min = y[i];
     }
 
