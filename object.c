@@ -6,6 +6,7 @@
 #include "object.h"
 #include "layer.h"
 #include "drawtool.h"
+#include "fonts.h"
 
 void draw_background(struct color layer[HEIGHT][WIDTH]){
     clear_layer(layer);

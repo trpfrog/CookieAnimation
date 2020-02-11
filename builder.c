@@ -31,8 +31,8 @@ int main(void){
         pour_milk(t+4);
         draw_cursor(100, 70);
         merge_layer(pop_up);
-        struct color figure[HEIGHT][WIDTH];
-        print_number(723456789000+98765321l*t,figure);
+        print_number(623456789000+98765321l*t,figure);
+        print_cookies(figure);
         merge_layer(figure);
         img_write();
     }

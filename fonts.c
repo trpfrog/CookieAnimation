@@ -10,6 +10,7 @@
 
 typedef void (*function)(int,int,struct color [HEIGHT][WIDTH]);
 function figurefunc[11];
+int COOKIES[13][27];
 
 void print_figure(int *x, int *y, int dots, int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     for(int i=0; i<dots; i++){
@@ -88,6 +89,24 @@ void initialize_funcarray(void){
     figurefunc[8] = print_8;
     figurefunc[9] = print_9;
     figurefunc[10] = print_comma;
+    int cc[13][28] = {{26,4,7,3,16,-1,-2},
+                      {27,3,7,3,16,-1,-2},
+                      {27,3,7,3,16,-1,-2},
+                      {27,3,26,-1,-2},
+                      {2,4,5,4,5,4,3,3,1,4,1,4,3,3,5,3,2,-1,-2},
+                      {1,6,3,6,3,6,2,3,2,2,3,3,2,5,3,6,-1,-2},
+                      {0,8,1,3,2,3,1,3,2,3,1,3,1,3,3,3,1,3,1,3,1,2,3,2,-1,-2},
+                      {0,3,3,2,1,2,4,2,1,2,4,2,1,6,4,3,1,2,3,2,1,4,3,-1,-2},
+                      {0,3,6,2,4,2,1,2,4,2,1,5,5,3,1,7,2,5,1,-1,-2},
+                      {0,3,6,2,4,2,1,2,4,2,1,6,4,3,1,2,9,4,-1,-2},
+                      {0,3,3,2,1,3,2,3,1,3,2,3,1,3,1,3,3,3,1,3,2,2,1,2,3,2,-1,-2},
+                      {1,7,2,6,3,6,2,3,2,2,3,3,2,5,2,6,1,-1,-2},
+                      {2,5,4,4,5,4,2,5,1,3,1,5,2,3,5,3,2,-1,-2}};
+    for(int i=0;i<13;i++){
+        for(int j=0;cc[i][j]!=-2;j++){
+            COOKIES[i][j] = cc[i][j];
+        }
+    }
 }
 
 void apply_figure(int figure,int x,int y, struct color layer[HEIGHT][WIDTH]){
@@ -107,4 +126,24 @@ void print_number(long num, struct color layer[HEIGHT][WIDTH]){
         num %= (long)pow(10,11-i);
         pos += 11;
     }
+}
+
+void print_cookies(struct color layer[HEIGHT][WIDTH]){
+    struct color white = {255,255,255,1.0};
+    int pos_y = 245;
+    for(int i=0; i<13; i++){
+        int pos_x = 73;
+        for(int j=0; COOKIES[i][j]!=-1; j++){
+            if(j%2==1){
+                for(int k=0; k<COOKIES[i][j]; k++){
+                    layer[pos_y][pos_x++] = white;
+                }
+            }else{
+                pos_x += COOKIES[i][j];
+            }
+        }
+        pos_y--;
+    }
+}
+
 }
