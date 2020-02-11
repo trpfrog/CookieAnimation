@@ -27,12 +27,11 @@ void draw_background(struct color layer[HEIGHT][WIDTH]){
     }
 }
 
-void draw_cookieband(struct color layer[HEIGHT][WIDTH]){
-    clear_layer(layer);
+void draw_cookieband(void){
     struct color c = {0,0,0,0.5};
     for(int i=230; i<=270; i++){
         for(int j=0; j<WIDTH; j++){
-            layer[i][j] = c;
+            put_pixel(c,j,i);
         }
     }
 }
