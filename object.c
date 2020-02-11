@@ -99,11 +99,10 @@ void bake_background_cookie(struct color layer[HEIGHT][WIDTH], int t){
     }
 }
 
-void pour_milk(int t){
-    double omega = 1;
-    struct color milk_color = {225,225,224,0.8};
+void pour_milk(int t,int h){
+    struct color milk_color = {255,254,246,0.8};
     for(int x=0; x<WIDTH; x++){
-        int endpoint = (int)(7*sin(omega*t+x/50.0)+50);
+        int endpoint = (int)(7*sin(0.1*t+0.02*x)+50+h);
         for(int y = 0; y<=endpoint; y++){
             int diff = 10;
             struct color c = {(milk_color.r-diff)+(diff/endpoint*y),
