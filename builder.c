@@ -7,6 +7,15 @@
 #include "drawtool.h"
 #include "fonts.h"
 
+void show_progress(int now, int all){
+    int percent = (int)round(100*now/(double)all);
+    printf("\rNow printing...[");
+    for(int i=1; i<=10; i++){
+        printf(i*10<percent ? "#" : " ");
+    }
+    printf("] %2d%% done (%3d/%d)",(int)(100*now/(double)all),now,all);
+}
+
 int main(void){
     struct color background[HEIGHT][WIDTH];
     struct color background_cookie[HEIGHT][WIDTH];
@@ -15,8 +24,11 @@ int main(void){
     draw_background(background);
     bake_cookie(cookie);
     initialize_funcarray();
-
-    for(int t=0; t<150; t++){
+    int output_files = 1;
+    printf("Now printing... 00%%done");
+    for(int t=0; t<output_files; t++){
+        show_progress(t,output_files);
+        fflush(stdout);
         img_clear();
         bake_background_cookie(background_cookie, t);
         draw_pop_up(pop_up,t);
@@ -36,5 +48,7 @@ int main(void){
         merge_layer(figure);
         img_write();
     }
+    printf("\rNow printing...[##########] 100%% done! (%d/%d)\n",output_files,output_files);
+    printf("Output successfully completed!\n");
     return 0;
 }
