@@ -85,10 +85,10 @@ void bake_background_cookie(struct color layer[HEIGHT][WIDTH], int t){
     int x0, y0;
     struct color light = {0xad, 0x8b, 0x60, 1.0};
     struct color choco_color = {0x5c, 0x34, 0x21, 1.0};
-    for (int i = 0; i < 10;i++){
-        x0 = 20 * i;
-        y0 = 300 - (10 * t - (int)(100 * sin(i * 1.6))) % 250;
-        img_fillcircle(light, 20 * i, y0, 8, layer);
+    for (int i = 0; i < 20;i++){
+        x0 = (20 * i)%200;
+        y0 = 300 - (7 * t - (int)(100 * sin(i * 1.6))) % 250;
+        img_fillcircle(light, x0, y0, 8, layer);
         img_fillcircle(choco_color, x0 - 1, y0 + 2, 3, layer);
         img_fillcircle(choco_color, x0 + 4 , y0 + 2, 1, layer);
         img_fillcircle(choco_color, x0 + 1 , y0 - 4, 1, layer);

@@ -46,7 +46,7 @@ void fill_polygon(int x[], int y[], int dots, struct color c, struct color layer
     for(int i=0; i<dots; i++){
         if (x_max < x[i]) x_max = x[i];
         if (x_min > x[i]) x_min = x[i];
-        if (y_max < x[i]) y_max = y[i];
+        if (y_max < y[i]) y_max = y[i];
         if (y_min > y[i]) y_min = y[i];
     }
 
@@ -54,8 +54,8 @@ void fill_polygon(int x[], int y[], int dots, struct color c, struct color layer
     double marker    = -2.0;
     double ignore    = -3.0;
 
-    for(int i=0; i<HEIGHT; i++){
-        for(int j=0; j<WIDTH; j++){
+    for(int i=y_min; i<=y_max; i++){
+        for(int j=x_min; j<=x_max; j++){
             layer[i][j].a = invisible;
         }
     }
@@ -127,8 +127,9 @@ void fill_polygon(int x[], int y[], int dots, struct color c, struct color layer
     //枠線と頂点を塗る
     for(int draw_x = x_min; draw_x <= x_max; draw_x++){
         for(int draw_y = y_min; draw_y <= y_max; draw_y++) {
-            if (layer[draw_y][draw_x].a != ignore || layer[draw_y][draw_x].a != marker) continue;
-            layer[draw_y][draw_x] = mix_color(layer[draw_y][draw_x],c);
+            if (layer[draw_y][draw_x].a == ignore || layer[draw_y][draw_x].a == marker){
+                layer[draw_y][draw_x] = mix_color(layer[draw_y][draw_x],c);
+            }
         }
     }
 }
