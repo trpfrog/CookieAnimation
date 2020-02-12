@@ -14,15 +14,6 @@ int COOKIE_DUNKER[9][45];
 int ACHIEVEMENT[6][61];
 int COOKIES[13][27];
 
-void print_figure(int *x, int *y, int dots, int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
-    for(int i=0; i<dots; i++){
-        x[i] += origin_x;
-        y[i] += origin_y;
-    }
-    struct color white = {255,255,255,1.0};
-    fill_polygon(x,y,dots,white,layer);
-}
-
 void print_segment(bool top, bool upper_left, bool upper_right, bool middle, bool lower_left, bool lower_right, bool bottom, int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     struct color white = {255,255,255,1.0};
     if(top)         img_fillrect(white, origin_x+5,  origin_y+13, 6,3, layer);
@@ -80,7 +71,7 @@ void print_comma(int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
 }
 
 
-void initialize_funcarray(void){
+void initialize_fonts(void){
     figurefunc[0] = print_0;
     figurefunc[1] = print_1;
     figurefunc[2] = print_2;
@@ -135,11 +126,6 @@ void initialize_funcarray(void){
             COOKIE_DUNKER[i][j] = cd[i][j];
         }
     }
-}
-
-void apply_figure(int figure,int x,int y, struct color layer[HEIGHT][WIDTH]){
-    initialize_funcarray();
-    figurefunc[figure](x,y,layer);
 }
 
 void print_number(long num, struct color layer[HEIGHT][WIDTH]){

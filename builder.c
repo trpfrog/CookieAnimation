@@ -41,7 +41,7 @@ int main(void){
     draw_background(background);
 
     bake_cookie(cookie);
-    initialize_funcarray();
+    initialize_fonts();
     struct color figure[HEIGHT][WIDTH];
     int output_files = 400;
     printf("Now printing... 00%%done");
