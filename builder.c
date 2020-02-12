@@ -82,6 +82,5 @@ int main(void){
         img_write();
     }
     printf("\rNow printing...[##########]100%% done! (%d/%d)\n",output_files,output_files);
-    printf("Output successfully completed!\n");
     return 0;
 }

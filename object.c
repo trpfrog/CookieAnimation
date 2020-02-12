@@ -141,8 +141,8 @@ void draw_shine(int time, int wings){
             double degree = get_degree(X,Y);
 
             for(int i=0; i<wings; i++){
-                double d1 = rest(-time+360/wings*i,360);
-                double d2 = rest(-time+360/(2*wings)+360/wings*i,360);
+                double d1 = rest(-0.3*time+360/wings*i,360);
+                double d2 = rest(-0.3*time+360/(2*wings)+360/wings*i,360);
                 if((d1<=degree && degree<=d2 && d1<=d2) || ((d1<=degree || degree<=d2) && d1>d2)){
                     shine_color.a = 1 - r/gradation_r;
                     put_pixel(shine_color,x,y);
@@ -154,7 +154,9 @@ void draw_shine(int time, int wings){
 }
 
 
-void draw_glow_circle(struct color layer[HEIGHT][WIDTH]){
+void draw_glow_circle(){
+    struct color layer[HEIGHT][WIDTH];
+    clear_layer(layer);
     struct color light = {0xff,0xff,0xff,0.0};
     clear_layer(layer);
     for(int r = 120; r > 0; r--){
