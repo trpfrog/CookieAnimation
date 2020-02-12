@@ -120,7 +120,7 @@ void fill_polygon(int x[], int y[], int dots, struct color c, struct color layer
                 brush = (color_equal(brush,c) ? invisible_brush : c);
                 continue;
             }
-            layer[draw_y][draw_x] = mix_color(layer[draw_y][draw_x],brush); //バグが起きるならmix_colorはやめて直接代入にした方が良さそう
+            layer[draw_y][draw_x] = mix_color(layer[draw_y][draw_x],brush);
         }
     }
 
