@@ -43,7 +43,7 @@ int main(void){
     bake_cookie(cookie);
     initialize_funcarray();
     struct color figure[HEIGHT][WIDTH];
-    int output_files = 250;
+    int output_files = 400;
     printf("Now printing... 00%%done");
     for(int t=0; t<output_files; t++){
         show_progress(t,output_files);
@@ -51,7 +51,12 @@ int main(void){
         img_clear();
 
         bake_background_cookie(background_cookie, t);
-        draw_pop_up(pop_up,t);
+        if(155 <= t && t < 250){
+            draw_pop_up(pop_up,t - 155);
+        }else if(250 <= t && t < 250+33){
+            draw_pop_up(pop_up,258 - t);
+        }
+
         merge_layer(background);
         merge_layer(background_cookie);
         draw_glow_circle();
@@ -69,7 +74,13 @@ int main(void){
         merge_layer(temp_cursor);
 
         int h = 0;
-        if(50<t) h = t<150 ? t-50 : 100;
+        if(50<t && t<150){
+            h = t-50;
+        }else if(150<=t && t<250){
+            h = 100;
+        }else if(250<=t && t<350){
+            h = 350-t;
+        }
         pour_milk(t,0.7*h);
         merge_layer(cookie);
         pour_milk(t+15,0.7*h);

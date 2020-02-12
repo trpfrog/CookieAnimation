@@ -234,8 +234,6 @@ for (int i = 0; i < 28; i++){
 
 void draw_pop_up(struct color layer[HEIGHT][WIDTH],int t){
     clear_layer(layer);
-    int pop_up_start = 155;
-    t -= pop_up_start;
     if(t<0) return;
     struct color black = {22,22,22,1.0};
     struct color gold = {209, 174, 21, 1.0};
