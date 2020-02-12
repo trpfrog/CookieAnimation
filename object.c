@@ -141,8 +141,8 @@ void draw_shine(int time, int wings){
             double degree = get_degree(X,Y);
 
             for(int i=0; i<wings; i++){
-                double d1 = rest(time+360/wings*i,360);
-                double d2 = rest(time+360/(2*wings)+360/wings*i,360);
+                double d1 = rest(-time+360/wings*i,360);
+                double d2 = rest(-time+360/(2*wings)+360/wings*i,360);
                 if((d1<=degree && degree<=d2 && d1<=d2) || ((d1<=degree || degree<=d2) && d1>d2)){
                     shine_color.a = 1 - r/gradation_r;
                     put_pixel(shine_color,x,y);
@@ -153,9 +153,9 @@ void draw_shine(int time, int wings){
     }
 }
 
-void draw_glow_circle(void){
+
+void draw_glow_circle(struct color layer[HEIGHT][WIDTH]){
     struct color light = {0xff,0xff,0xff,0.0};
-    struct color layer[HEIGHT][WIDTH];
     clear_layer(layer);
     for(int r = 120; r > 0; r--){
         light.a = 0.015;
@@ -164,7 +164,9 @@ void draw_glow_circle(void){
     merge_layer(layer);
 }
 
-void draw_cursor(int x0, int y0){
+struct color cursor[HEIGHT][WIDTH];
+struct color rotated_cursor[HEIGHT][WIDTH];
+void draw_cursor(int x0, int y0, struct color layer[HEIGHT][WIDTH]){
     struct color white = {255, 255, 255, 1.0};
     struct color black = {0, 0, 0, 1.0};
     int xb[] = {4, 4, 4, 3, 3, 3, 2, 2, 1, 1, 1, 0, 0, -1, -1, -1, -1, -1, -1, -2, -2, -3, -3, -3, -3, -3, -3, -3, -3, -4, -4, -5, -5};
@@ -172,10 +174,22 @@ void draw_cursor(int x0, int y0){
     int xw[] = {3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -3, -3, -4, -4};
     int yw[] = {1, 0, -1, 2, 1, 0, -1, -2, -3, 1, 0, -1, -2, -3, 3, 2, 1, 0, -1, -2, -3, 1, 0, -1, -2, -3, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, 0, -1, 1, 0};
     for (int i = 0; i < 33; i++){
-        put_pixel(black, x0 + xb[i], y0 + yb[i]);
+        layer[y0 + yb[i]][x0 + xb[i]] = black;
     }
     for (int j = 0; j < 40; j++){
-        put_pixel(white, x0 + xw[j], y0 + yw[j]);
+        layer[y0 + yw[j]][x0 + xw[j]] = white;
+    }
+    copy_layer(cursor,layer);
+    clear_layer(layer);
+    for(int i=0; i<4; i++){
+        rotate_layer(layer,90,100,140);
+        unite_layer(layer,cursor);
+    }
+    copy_layer(cursor,layer);
+    for(int i=1; i<=10; i++){
+        copy_layer(rotated_cursor,cursor);
+        rotate_layer(rotated_cursor,10*i,100,140);
+        unite_layer(layer,rotated_cursor);
     }
 }
 
