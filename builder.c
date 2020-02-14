@@ -54,7 +54,7 @@ int main(void){
         if(155 <= t && t < 250){
             draw_pop_up(pop_up,t - 155);
         }else if(250 <= t && t < 250+33){
-            draw_pop_up(pop_up,258 - t);
+            draw_pop_up(pop_up,283 - t);
         }
 
         merge_layer(background);
@@ -71,7 +71,6 @@ int main(void){
                 temp_cursor[i][j] = invisible;
             }
         }
-        merge_layer(temp_cursor);
 
         int h = 0;
         if(50<t && t<150){
@@ -82,6 +81,7 @@ int main(void){
             h = 350-t;
         }
         pour_milk(t,0.7*h);
+        merge_layer(temp_cursor);
         merge_layer(cookie);
         pour_milk(t+15,0.7*h);
 
