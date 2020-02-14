@@ -9,10 +9,14 @@
 #include "fonts.h"
 
 typedef void (*function)(int,int,struct color [HEIGHT][WIDTH]);
-function figurefunc[11];
+function figurefunc[10];
 int COOKIE_DUNKER[9][45];
 int ACHIEVEMENT[6][61];
 int COOKIES[13][27];
+
+void test_print(){
+   printf("HelloWorld\n");
+}
 
 void print_segment(bool top, bool upper_left, bool upper_right, bool middle, bool lower_left, bool lower_right, bool bottom, int origin_x, int origin_y, struct color layer[HEIGHT][WIDTH]){
     struct color white = {255,255,255,1.0};
@@ -82,7 +86,6 @@ void initialize_fonts(void){
     figurefunc[7] = print_7;
     figurefunc[8] = print_8;
     figurefunc[9] = print_9;
-    figurefunc[10] = print_comma;
     int cc[13][28] = {{26,4,7,3,16,-1,-2},
                       {27,3,7,3,16,-1,-2},
                       {27,3,7,3,16,-1,-2},
@@ -133,7 +136,7 @@ void print_number(long num, struct color layer[HEIGHT][WIDTH]){
     int pos = 25;
     for(int i=0; i<12; i++){
         if(i%3==0 && i!=0){
-            figurefunc[10](pos,252,layer);
+            print_comma(pos,252,layer);
             pos += 6;
         }
         figurefunc[num/(long)pow(10,11-i)](pos,252,layer);
